@@ -14,7 +14,7 @@ describe('lib', () => {
       const composer = new Composer({ modules })
       const yaml = composer.yaml // eslint-disable-line no-unused-vars
 
-      // console.log(yaml) // eslint-disable-line no-console
+      console.log(yaml) // eslint-disable-line no-console
     })
 
   })
