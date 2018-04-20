@@ -1,0 +1,22 @@
+{
+  "name": "adept",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "js-yaml": "^3.11.0",
+    "lodash.pick": "^4.4.0",
+    "statuses": "^1.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "mocha": "istanbul cover _mocha",
+    "test": "eslint src/ test/ && nsp check && npm run mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
