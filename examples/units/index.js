@@ -1,15 +1,5 @@
 'use strict'
 
-// securityDefinitions:
-//   authenticationToken:
-//     type: apiKey
-//     in:   header
-//     name: Authorization
-//   facilityScope:
-//     type: apiKey
-//     in:   header
-//     name: Scope
-
 const Unit            = require('./unit')
 const IndexUnits      = require('./indexUnits')
 const CreateUnit      = require('./createUnit')

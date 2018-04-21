@@ -20,7 +20,7 @@
   },
   "scripts": {
     "mocha": "istanbul cover _mocha",
-    "test": "eslint src/ test/ && nsp check && npm run mocha"
+    "test": "eslint src/ test/ examples/ && nsp check && npm run mocha"
   },
   "author": "",
   "license": "ISC"
