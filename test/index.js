@@ -1,28 +1,35 @@
 'use strict'
 
-const units = require('../examples/units')
-const lib   = require('../lib')
-const { expect } = require('chai')
+const units  = require('../examples/units')
+const shifts = require('../examples/shifts')
+const lib    = require('../lib')
+const Unit   = require('../examples/units/unit')
+const UpdateUnitInput = require('../examples/units/updateUnitInput')
+const { expect }      = require('chai')
 
 describe('lib', () => {
 
   describe('compose', () => {
 
     it('should build specification for modules', () => {
-      const modules  = [ units ]
+      const modules  = [ units, shifts ]
       const composer = new lib.Composer({ modules })
       const spec     = composer.spec
+
+      console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
 
       expect(spec.paths).to.have.property('/indexUnits')
       expect(spec.paths).to.have.property('/createUnit')
       expect(spec.paths).to.have.property('/updateUnit')
       expect(spec.paths).to.have.property('/readUnit')
       expect(spec.paths).to.have.property('/deleteUnit')
-
+      expect(spec.paths).to.have.property('/indexShifts')
 
       expect(spec.definitions).to.have.property('Unit')
       expect(spec.definitions).to.have.property('CreateUnitInput')
       expect(spec.definitions).to.have.property('UpdateUnitInput')
+      expect(spec.definitions).to.have.property('Shift')
+      expect(spec.definitions).to.have.property('ShiftRequirement')
     })
 
   })
@@ -30,7 +37,7 @@ describe('lib', () => {
   describe('definition', () => {
 
     it('should validate object against schema', async() => {
-      await units.UpdateUnitInput.validate({ name: 'Unit #1' })
+      await UpdateUnitInput.validate({ name: 'Unit #1' })
     })
 
     it('should raise exception if schema is not defined', async() => {
@@ -52,7 +59,7 @@ describe('lib', () => {
     it('should default to resouce when input not defined', async() => {
       class MoveUnit extends lib.Mutation {
         static get resource() {
-          return units.Unit
+          return Unit
         }
       }
 
@@ -80,7 +87,7 @@ describe('lib', () => {
     it('should validate object against schema', async() => {
       class CustomValidator extends lib.Validator {
         static get jsonSchema() {
-          return units.UpdateUnitInput.jsonSchema
+          return UpdateUnitInput.jsonSchema
         }
       }
 
@@ -90,7 +97,7 @@ describe('lib', () => {
     it('should raise validation exception with errors', async() => {
       class CustomValidator extends lib.Validator {
         static get jsonSchema() {
-          return units.Unit.jsonSchema
+          return Unit.jsonSchema
         }
       }
 
