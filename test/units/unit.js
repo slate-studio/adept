@@ -1,8 +1,8 @@
 'use strict'
 
-const { Document, Definition } = require('../../lib')
+const { Document } = require('../../lib')
 
-class Unit extends Document(Definition) {
+class Unit extends Document {
   static get schema() {
     const schema = Object.assign({}, super.schema)
     return Object.assign(schema, this.entitySchema)
