@@ -1,6 +1,6 @@
 'use strict'
 
-const Definition = require('./definition')
+const { Definition } = require('../lib')
 
 class Document extends Definition {
   static get schema() {

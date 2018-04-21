@@ -1,6 +1,6 @@
 'use strict'
 
-const units = require('./units')
+const units = require('../examples/units')
 const lib   = require('../lib')
 const { expect } = require('chai')
 

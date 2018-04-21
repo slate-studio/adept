@@ -1,6 +1,6 @@
 'use strict'
 
-const { Document } = require('../../lib')
+const Document = require('../document')
 
 class Unit extends Document {
   static get schema() {
