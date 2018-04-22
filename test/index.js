@@ -16,7 +16,7 @@ describe('lib', () => {
       const composer = new lib.Composer({ modules })
       const spec     = composer.spec
 
-      console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
+      // console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
 
       expect(spec.paths).to.have.property('/indexUnits')
       expect(spec.paths).to.have.property('/createUnit')
@@ -64,6 +64,29 @@ describe('lib', () => {
       }
 
       expect(MoveUnit.input.id).to.equal('Unit')
+    })
+
+  })
+
+  describe('operation', () => {
+
+    it('should return empty array if no references defined', async() => {
+      class ReadFacilityUser extends lib.Operation {}
+      expect(ReadFacilityUser.references).to.be.empty
+    })
+
+    it('should raise exception if method is not defined', async() => {
+      class ReadFacilityUser extends lib.Operation {}
+
+      try {
+        ReadFacilityUser.spec
+
+      } catch (error) {
+        expect(error.message).to.equal('\'method\' is not defined for ReadFacilityUser')
+        return
+      }
+
+      throw new Error('Expected exception has not been raised')
     })
 
   })

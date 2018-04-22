@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.capitalize": "^4.2.1",
+    "lodash.lowercase": "^4.3.0",
     "lodash.pick": "^4.4.0",
     "statuses": "^1.5.0",
     "z-schema": "^3.19.1"
