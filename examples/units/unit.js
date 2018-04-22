@@ -11,23 +11,23 @@ class Unit extends Document {
   static get entitySchema() {
     return {
       state: {
-        description: `State where ${this.nameLowcasePlural} facility is located`,
+        description: 'State where units facility is located',
         type:        'string',
         required:    true
       },
       name: {
-        description: `${this.name} name`,
+        description: 'Unit name',
         type:        'string',
         required:    true
       },
       beds: {
-        description: `Number of beds in ${this.nameLowcase}`,
+        description: 'Number of beds in a unit',
         type:        'number',
         min:         1,
         required:    true
       },
       staffingPeriod: {
-        description: `${this.name} staffing period in weeks`,
+        description: 'Unit staffing period in weeks',
         type:        'number',
         min:         1,
         required:    true
@@ -38,47 +38,47 @@ class Unit extends Document {
         required:    true
       },
       minimumStaffingRequirement: {
-        description: `${this.name} minimum staffing requirements cached object`,
+        description: 'Unit minimum staffing requirements cached object',
         type:        'object',
         required:    true
       },
       hppdTarget: {
-        description: `Hours per patient day target value for ${this.nameLowcasePlural}`,
+        description: 'Hours per patient day target value for a unit',
         type:        'number',
         required:    true
       },
       schedulingStartsAt: {
-        description: `Date and time when scheduling starts in a new ${this.nameLowcase}`,
+        description: 'Date and time when scheduling starts in a newly created unit',
         type:        'string',
         format:      'date-time',
         required:    true
       },
       dayStartTime: {
-        description: `Time when morning shifts do start in a ${this.nameLowcase}`,
+        description: 'Time when morning shifts do start in a unit',
         type:        'string',
         example:     '06:00',
         required:    true
       },
       nightStartTime: {
-        description: `Time when night shifts do start in a ${this.nameLowcase}`,
+        description: 'Time when night shifts do start in a unit',
         type:        'string',
         example:     '20:00',
         required:    true
       },
       requiredSkillsIds: {
-        description: `IDs of staff skills required to work in a ${this.nameLowcase}`,
+        description: 'IDs of staff skills required to work in a unit',
         type:        'array',
         default:     [],
         required:    true
       },
       requiredCertificationsCredentials: {
-        description: `Staff certification credentials required to work in a ${this.nameLowcase}`,
+        description: 'Staff certification credentials required to work in a unit',
         type:        'array',
         default:     [],
         required:    true
       },
       noteSubjectOptions: {
-        description: `Subject options for ${this.nameLowcase} notes`,
+        description: 'Subject options for unit notes',
         type:        'array',
         default:     [],
         required:    true
