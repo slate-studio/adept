@@ -1,8 +1,9 @@
 'use strict'
 
-const Unit            = require('./unit')
+const Unit         = require('./unit')
+const { Create }   = require('../../lib')
+const { security } = require('../securities')
 const CreateUnitInput = require('./createUnitInput')
-const { Create } = require('../../lib')
 
 class CreateUnit extends Create {
   static get resource() {
@@ -11,6 +12,10 @@ class CreateUnit extends Create {
 
   static get input() {
     return CreateUnitInput
+  }
+
+  static get security() {
+    return security
   }
 }
 

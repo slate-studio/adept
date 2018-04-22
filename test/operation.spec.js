@@ -23,7 +23,7 @@ class ReadFacilityUser extends Operation {
   }
 }
 
-describe('operation', () => {
+describe('Operation', () => {
 
   it('should raise exception if responses are not defined', async() => {
     class NoResponses extends Operation {}

@@ -6,7 +6,7 @@ const Shift           = require('../examples/shifts/shift')
 const Definition = require('../lib/definition')
 const { expect } = require('chai')
 
-describe('definition', () => {
+describe('Definition', () => {
 
   it('should raise exception if schema is not defined', () => {
     class NoSchema extends Definition {}

@@ -4,7 +4,7 @@ const Shift = require('../examples/shifts/shift')
 const Read  = require('../lib/crud/read')
 const { expect } = require('chai')
 
-describe('query', () => {
+describe('Query', () => {
 
   it('should have method and output defined', () => {
     class ReadShift extends Read {

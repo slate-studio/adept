@@ -4,7 +4,7 @@ const Shift  = require('../examples/shifts/shift')
 const Update = require('../lib/crud/update')
 const { expect } = require('chai')
 
-describe('mutation', () => {
+describe('Mutation', () => {
 
   it('should have method, input and output defined', () => {
     class UpdateShift extends Update {

@@ -5,7 +5,7 @@ const shifts     = require('../examples/shifts')
 const Composer   = require('../lib/composer')
 const { expect } = require('chai')
 
-describe('compose', () => {
+describe('Compose', () => {
 
   it('should build specification for modules', () => {
     const modules  = [ units, shifts ]
@@ -13,6 +13,9 @@ describe('compose', () => {
     const spec     = composer.spec
 
     // console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
+
+    expect(spec.securityDefinitions).to.have.property('Authorization')
+    expect(spec.securityDefinitions).to.have.property('Scope')
 
     expect(spec.paths).to.have.property('/indexUnits')
     expect(spec.paths).to.have.property('/createUnit')

@@ -1,6 +1,15 @@
 'use strict'
 
+const Authorization = require('./authorization')
+const Scope = require('./scope')
+
 module.exports = {
-  AuthenticationToken: require('./authenticationToken'),
-  FacilityScope:       require('./facilityScope')
+  Authorization,
+  Scope,
+  security: [
+    {
+      Authorization: { klass: Authorization, options: [] },
+      Scope:         { klass: Scope, options: [] }
+    }
+  ]
 }

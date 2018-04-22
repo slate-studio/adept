@@ -4,7 +4,7 @@ const UpdateUnit = require('../examples/units/updateUnit')
 const Resource   = require('../lib/resource')
 const { expect } = require('chai')
 
-describe('resource', () => {
+describe('Resource', () => {
 
   it('should raise exception if resource is not defined', () => {
     class NoResource extends Resource {}

@@ -5,7 +5,7 @@ const Unit       = require('../examples/units/unit')
 const Validator  = require('../lib/validator')
 const { expect } = require('chai')
 
-describe('validator', () => {
+describe('Validator', () => {
 
   it('should validate object against schema', async() => {
     class CustomValidator extends Validator {
