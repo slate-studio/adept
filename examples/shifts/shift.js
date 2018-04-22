@@ -9,10 +9,6 @@ class Shift extends Document {
     return Object.assign(schema, this.entitySchema)
   }
 
-  static get references() {
-    return [ ShiftRequirement ]
-  }
-
   static get entitySchema() {
     return {
       unitId: {

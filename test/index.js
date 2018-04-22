@@ -70,11 +70,6 @@ describe('lib', () => {
 
   describe('operation', () => {
 
-    it('should return empty array if no references defined', async() => {
-      class ReadFacilityUser extends lib.Operation {}
-      expect(ReadFacilityUser.references).to.be.empty
-    })
-
     it('should raise exception if method is not defined', async() => {
       class ReadFacilityUser extends lib.Operation {}
 
