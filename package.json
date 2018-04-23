@@ -2,6 +2,13 @@
   "name": "@slatestudio/adept",
   "version": "0.2.0",
   "description": "Skeleton for speficiation based services",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/slate-studio/adept.git"
+  },
+  "bugs": {
+    "url": "http://github.com/slate-studio/adept/issues"
+  },
   "main": "lib/index.js",
   "directories": {
     "lib": "lib",
