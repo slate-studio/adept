@@ -10,7 +10,7 @@ describe('Compose', () => {
   it('should build specification for modules', () => {
     const modules  = [ units, shifts ]
     const composer = new Composer({ modules })
-    const spec     = composer.spec
+    const { spec, operations } = composer
 
     // console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
 
@@ -29,6 +29,8 @@ describe('Compose', () => {
     expect(spec.definitions).to.have.property('UpdateUnitInput')
     expect(spec.definitions).to.have.property('Shift')
     expect(spec.definitions).to.have.property('ShiftRequirement')
+
+    expect(operations.length).to.equal(6)
   })
 
 })

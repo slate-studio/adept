@@ -25,38 +25,14 @@ class ReadFacilityUser extends Operation {
 
 describe('Operation', () => {
 
-  it('should raise exception if responses are not defined', async() => {
+  it('should return default responses', async() => {
     class NoResponses extends Operation {}
-
-    try {
-      NoResponses.spec
-
-    } catch (error) {
-      expect(error.message).to.equal('\'responses\' are not defined for NoResponses')
-      return
-    }
-
-    throw new Error('Expected exception has not been raised')
+    expect(NoResponses.spec['/noResponses'].get.responses).to.have.property('200')
   })
 
   it('should raise exception if method is not defined', async() => {
-    class NoMethod extends Operation {
-      static get responses() {
-        return {
-          'OK': {}
-        }
-      }
-    }
-
-    try {
-      NoMethod.spec
-
-    } catch (error) {
-      expect(error.message).to.equal('\'method\' is not defined for NoMethod')
-      return
-    }
-
-    throw new Error('Expected exception has not been raised')
+    class NoMethod extends Operation {}
+    expect(NoMethod.spec['/noMethod']).to.have.property('get')
   })
 
   it('should return empty array if no references', async() => {
