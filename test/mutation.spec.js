@@ -14,7 +14,7 @@ describe('Mutation', () => {
     }
 
     expect(UpdateShift.spec).to.have.property('/updateShift')
-    expect(UpdateShift.spec['/updateShift']).to.have.property('post')
+    expect(UpdateShift.spec['/updateShift']).to.have.property('patch')
   })
 
 })

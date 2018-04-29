@@ -30,6 +30,31 @@ describe('Operation', () => {
     expect(NoResponses.spec['/noResponses'].get.responses).to.have.property('200')
   })
 
+  it('should raise exception if status is not defined in responses', async() => {
+    class NoStatusResponses extends Operation {
+      static get responses() {
+        return {
+          'OK': {}
+        }
+      }
+    }
+
+    const handler = new NoStatusResponses()
+    handler.status = 'OK'
+
+    expect(handler.status).to.equal('OK')
+
+    try {
+      handler.status = 'No Content'
+
+    } catch (error) {
+      expect(error.message).to.equal('Reponse \'No Content\' is not defined for noStatusResponses')
+      return
+    }
+
+    throw new Error('Expected exception has not been raised')
+  })
+
   it('should raise exception if method is not defined', async() => {
     class NoMethod extends Operation {}
     expect(NoMethod.spec['/noMethod']).to.have.property('get')
