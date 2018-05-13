@@ -48,7 +48,7 @@ describe('Operation', () => {
       handler.status = 'No Content'
 
     } catch (error) {
-      expect(error.message).to.equal('Reponse \'No Content\' is not defined for noStatusResponses')
+      expect(error.message).to.equal('Response \'No Content\' is not defined for noStatusResponses')
       return
     }
 
@@ -58,23 +58,6 @@ describe('Operation', () => {
   it('should raise exception if method is not defined', async() => {
     class NoMethod extends Operation {}
     expect(NoMethod.spec['/noMethod']).to.have.property('get')
-  })
-
-  it('should return empty array if no references', async() => {
-    class NoReferences extends Operation {
-      static get method() {
-        return 'get'
-      }
-
-      static get responses() {
-        return {
-          'OK': {}
-        }
-      }
-    }
-
-    const { references } = NoReferences
-    expect(references).to.be.empty
   })
 
   it('should build spec', async() => {
