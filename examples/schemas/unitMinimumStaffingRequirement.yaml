@@ -1,0 +1,15 @@
+id:
+  type:     string
+  required: true
+
+state:
+  type:     string
+  required: true
+
+ratio:
+  type:     number
+  required: true
+
+careType:
+  type:     string
+  required: true

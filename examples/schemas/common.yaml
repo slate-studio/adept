@@ -1,0 +1,24 @@
+id:
+  description: 'Document ID'
+  type:        string
+  required:    true
+
+createdAt:
+  description: 'Date and time when document was created'
+  type:        string
+  format:      date-time
+  required:    true
+
+createdBy:
+  description: 'ID of a user who created document'
+  type:        string
+  required:    true
+
+updatedAt:
+  description: 'Date and time when document was updated'
+  type:        string
+  format:      date-time
+
+updatedBy:
+  description: 'ID of a user who updated document'
+  type:        string

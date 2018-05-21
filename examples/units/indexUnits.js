@@ -1,6 +1,6 @@
 'use strict'
 
-const Unit      = require('./unit')
+const Unit      = require('../models/unit')
 const { Index } = require('../../lib')
 
 class IndexUnits extends Index {

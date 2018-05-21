@@ -1,42 +1,33 @@
 'use strict'
 
-const { Definition } = require('../lib')
-const toLower = require('lodash.tolower')
+const schemas   = require('./schemas')
+const cloneDeep = require('lodash.clonedeep')
+const { Document: AbstractDocument } = require('../lib')
 
-class Document extends Definition {
+class Document extends AbstractDocument {
+  static getSchema(name) {
+    return cloneDeep(schemas[name])
+  }
+
+  static get commonSchema() {
+    const schema = this.getSchema('Common')
+    this.resolveReferences(schema)
+
+    return schema
+  }
+
+  static get documentSchema() {
+    const schema = this.getSchema(this.name)
+    this.resolveReferences(schema)
+
+    return schema
+  }
+
   static get schema() {
-    return {
-      id: {
-        description: `${this.name} ID`,
-        type:        'string',
-        // format:      'uuid',
-        required:    true
-      },
-      createdAt: {
-        description: `Date and time when ${toLower(this.name)} was created`,
-        type:        'string',
-        format:      'date-time',
-        required:    true
-      },
-      updatedAt: {
-        description: `Date and time when ${toLower(this.name)} was updated`,
-        type:        'string',
-        format:      'date-time',
-        required:    true
-      },
-      createdBy: {
-        description: `ID of a user who created ${toLower(this.name)}`,
-        type:        'string',
-        // format:      'uuid',
-        required:    true
-      },
-      updatedBy: {
-        description: `ID of a user who updated ${toLower(this.name)}`,
-        type:        'string',
-        // format:      'uuid',
-        required:    true
-      }
-    }
+    const schema = Object.assign({}, this.commonSchema)
+    Object.assign(schema, this.documentSchema)
+
+    return schema
   }
 }
 

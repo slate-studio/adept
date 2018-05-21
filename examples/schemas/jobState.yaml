@@ -1,0 +1,7 @@
+type: string
+default: pending
+enum:
+  - pending
+  - processing
+  - complete
+  - error

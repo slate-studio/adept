@@ -1,6 +1,6 @@
 'use strict'
 
-const Unit            = require('./unit')
+const Unit            = require('../models/unit')
 const UpdateUnitInput = require('./updateUnitInput')
 const { Update }      = require('../../lib')
 

@@ -6,23 +6,32 @@ const { expect } = require('chai')
 
 describe('Resource', () => {
 
-  it('should raise exception if resource is not defined', () => {
-    class NoResource extends Resource {}
+  describe('Resource.resource', () => {
+    it('should raise exception if resource is not defined', () => {
+      class NoResource extends Resource {}
 
-    try {
-      NoResource.resource
+      try {
+        NoResource.resource
 
-    } catch (error) {
-      expect(error.message).to.equal('\'resource\' is not defined for NoResource')
-      return
-    }
+      } catch (error) {
+        expect(error.message).to.equal('\'resource\' is not defined for NoResource')
+        return
+      }
 
-    throw new Error('Expected exception has not been raised')
+      throw new Error('Expected exception has not been raised')
+    })
   })
 
-  it('should have resourceName and collectionName defined', () => {
-    expect(UpdateUnit.resourceName).to.equal('Unit')
-    expect(UpdateUnit.collectionName).to.equal('Units')
+  describe('Resource.resourceName', () => {
+    it('should be defined', () => {
+      expect(UpdateUnit.resourceName).to.equal('Unit')
+    })
+  })
+
+  describe('Resource.collectionName', () => {
+    it('should be defined', () => {
+      expect(UpdateUnit.collectionName).to.equal('Units')
+    })
   })
 
 })

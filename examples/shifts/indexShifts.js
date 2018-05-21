@@ -1,6 +1,6 @@
 'use strict'
 
-const Shift     = require('./shift')
+const Shift     = require('../models/shift')
 const { Index } = require('../../lib')
 
 class IndexShifts extends Index {

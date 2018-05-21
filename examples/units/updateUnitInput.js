@@ -1,12 +1,12 @@
 'use strict'
 
 const pick = require('lodash.pick')
-const Unit = require('./unit')
+const Unit = require('../models/unit')
 const { Definition } = require('../../lib')
 
 class UpdateUnitInput extends Definition {
   static get schema() {
-    const schema = pick(Unit.schema, [
+    const schema = pick(Unit.documentSchema, [
       'state',
       'name',
       'beds',
