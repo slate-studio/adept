@@ -1,7 +1,7 @@
 {
   "name": "@slatestudio/adept",
-  "version": "0.6.1",
-  "description": "Skeleton for speficiation based services",
+  "version": "0.6.2",
+  "description": "Skeleton for specification based API service",
   "repository": {
     "type": "git",
     "url": "http://github.com/slate-studio/adept.git"
