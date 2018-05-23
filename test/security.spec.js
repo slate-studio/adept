@@ -13,7 +13,7 @@ describe('Security', () => {
         NoType.spec
 
       } catch (error) {
-        expect(error.message).to.equal('\'type\' is not defined for NoType')
+        expect(error.message).to.equal('NoType.type is not defined')
         return
       }
 
@@ -31,7 +31,7 @@ describe('Security', () => {
         NoIn.spec
 
       } catch (error) {
-        expect(error.message).to.equal('\'in\' is not defined for NoIn')
+        expect(error.message).to.equal('NoIn.in is not defined')
         return
       }
 

@@ -1,6 +1,6 @@
 'use strict'
 
-const UpdateUnit = require('../examples/units/updateUnit')
+const UpdateUnit = require('../examples/api/units/updateUnit')
 const Resource   = require('../lib/resource')
 const { expect } = require('chai')
 
@@ -14,7 +14,7 @@ describe('Resource', () => {
         NoResource.resource
 
       } catch (error) {
-        expect(error.message).to.equal('\'resource\' is not defined for NoResource')
+        expect(error.message).to.equal('NoResource.resource is not defined')
         return
       }
 

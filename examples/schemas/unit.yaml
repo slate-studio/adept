@@ -27,13 +27,11 @@ minimumStaffingRequirementId:
 
 defaultMinimumStaffingRequirement:
   description: 'Default unit minimum staffing requirement'
-  type:        object
   $ref:        'UnitMinimumStaffingRequirement'
   required:    true
 
 minimumStaffingRequirement:
   description: 'Unit minimum staffing requirement'
-  type:        object
   $ref:        'UnitMinimumStaffingRequirement'
   required:    true
 
@@ -52,12 +50,14 @@ dayStartTime:
   description: 'Time when morning shifts do start in a unit'
   type:        string
   example:     '06:00'
+  default:     '06:00'
   required:    true
 
 nightStartTime:
   description: 'Time when night shifts do start in a unit'
   type:        string
   example:     '20:00'
+  default:     '20:00'
   required:    true
 
 requiredSkillsIds:

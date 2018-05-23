@@ -1,8 +1,8 @@
 'use strict'
 
-const Unit         = require('../models/unit')
-const { Create }   = require('../../lib')
-const { security } = require('../securities')
+const Unit         = require('../../models/unit')
+const { Create }   = require('../../../lib')
+const { security } = require('../../securities')
 const CreateUnitInput = require('./createUnitInput')
 
 class CreateUnit extends Create {
@@ -14,7 +14,7 @@ class CreateUnit extends Create {
     return Unit
   }
 
-  static get input() {
+  static get mutation() {
     return CreateUnitInput
   }
 

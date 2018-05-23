@@ -1,8 +1,8 @@
 'use strict'
 
-const Unit            = require('../models/unit')
+const Unit       = require('../../models/unit')
+const { Update } = require('../../../lib')
 const UpdateUnitInput = require('./updateUnitInput')
-const { Update }      = require('../../lib')
 
 class UpdateUnit extends Update {
   static get tags() {
@@ -13,7 +13,7 @@ class UpdateUnit extends Update {
     return Unit
   }
 
-  static get input() {
+  static get mutation() {
     return UpdateUnitInput
   }
 }

@@ -1,14 +1,20 @@
 userId:
   type:     string
   required: true
+
 type:
   type:     string
   required: true
+
 state:
-  $ref: 'JobState'
+  $ref:    'JobState'
+  default: pending
+
 parameters:
   type: object
+
 debug:
   type: object
+
 error:
   type: object

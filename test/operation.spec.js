@@ -1,51 +1,59 @@
 'use strict'
 
-const Operation  = require('../lib/operation')
-const Definition = require('../lib/definition')
 const { expect } = require('chai')
-
-class FacilityUser extends Definition {}
-
-class ReadFacilityUser extends Operation {
-  static get method() {
-    return 'get'
-  }
-
-  static get responses() {
-    return {
-      'OK': {
-        schema: this.reference(FacilityUser)
-      },
-      'Not Found': {
-        description: 'Facility user is not found'
-      }
-    }
-  }
-}
+const Operation  = require('../lib/operation')
+const UpdateUnit = require('../examples/api/units/updateUnit')
+const ReadUnit   = require('../examples/api/units/readUnit')
+const Trigger    = require('../examples/api/demo/trigger')
 
 describe('Operation', () => {
 
-  describe('Operation.spec', () => {
+  describe('Operation.responses', () => {
     it('should return default responses', async() => {
-      class NoResponses extends Operation {}
-      expect(NoResponses.spec['/noResponses'].get.responses).to.have.property('200')
+      expect(Operation.responses).to.have.property('OK')
+    })
+  })
+
+  describe('Operation.references', () => {
+    it('should return empty hash by default', async() => {
+      expect(Operation.references).to.be.empty
+    })
+  })
+
+  describe('Operation.parametersSchema', () => {
+    it('should use empty source for scheme if query is missing', async() => {
+      expect(Trigger.parametersSchema.source).to.be.empty
+    })
+  })
+
+  describe('Operation.buildParameters', () => {
+    it('should return undefined values if no parameters configuration', async() => {
+      const { query, mutation } = Operation.buildParameters()
+      expect(query).to.be.undefined
+      expect(mutation).to.be.undefined
     })
 
-    it('should raise exception if method is not defined', async() => {
-      class NoMethod extends Operation {}
-      expect(NoMethod.spec['/noMethod']).to.have.property('get')
+    it('should return query and mutation objects with default values', async() => {
+      const queryParameters    = { id: 'TEST_UNIT' }
+      const mutationParameters = { name: 'Unit #1' }
+
+      const { mutation } = await UpdateUnit
+        .buildParameters(queryParameters, mutationParameters)
+
+      expect(mutation).to.have.property('dayStartTime')
+      expect(mutation).to.have.property('nightStartTime')
     })
 
-    it('should return specification', async() => {
-      ReadFacilityUser.reference('BadRequestError')
-      const { spec, references } = ReadFacilityUser
+    it('should raise exception if required parameter is missing in query', async() => {
+      try {
+        await ReadUnit.buildParameters({})
 
-      expect(spec).to.have.property('/readFacilityUser')
-      expect(spec['/readFacilityUser']).to.have.property('get')
-      expect(spec['/readFacilityUser'].get.operationId).to.equal('readFacilityUser')
-      expect(spec['/readFacilityUser'].get.responses).to.have.property('200')
-      expect(spec['/readFacilityUser'].get.responses['200'].description).to.equal('OK')
-      expect(references).to.be.not.empty
+      } catch (error) {
+        expect(error.originalError.errors.length).to.be.equal(1)
+        return
+      }
+
+      throw new Error('Expected exception has not been raised')
     })
   })
 

@@ -12,27 +12,13 @@ describe('Document', () => {
     })
   })
 
-  describe('Document.schema', () => {
-    it('should raise exception if schema method is not defined', () => {
-      try {
-        Document.schema
-
-      } catch (error) {
-        expect(error.message).to.equal('Class method schema is not defined for Document')
-        return
-      }
-
-      throw new Error('Expected exception has not been raised')
-    })
-  })
-
   describe('Document.getSchema()', () => {
-    it('should raise exception if schema method is not defined', () => {
+    it('should raise exception if not defined', () => {
       try {
         Document.getSchema('DefinitionName')
 
       } catch (error) {
-        expect(error.message).to.equal('Class method getSchema is not defined for Document')
+        expect(error.message).to.equal('Document.getSchema() is not defined')
         return
       }
 

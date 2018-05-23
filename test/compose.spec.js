@@ -1,8 +1,6 @@
 'use strict'
 
-const units      = require('../examples/units')
-const shifts     = require('../examples/shifts')
-const jobs       = require('../examples/jobs')
+const api = require('../examples/api')
 const Composer   = require('../lib/composer')
 const { expect } = require('chai')
 
@@ -10,11 +8,10 @@ describe('Compose', () => {
 
   describe('Compose.constructor()', () => {
     it('should build specification for modules', () => {
-      const modules  = [ units, shifts, jobs ]
-      const composer = new Composer({ modules })
+      const composer = new Composer({ modules: api })
       const { spec, operations } = composer
 
-      console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
+      // console.log(JSON.stringify(spec, null, 2)) // eslint-disable-line no-console
 
       expect(spec.securityDefinitions).to.have.property('Authorization')
       expect(spec.securityDefinitions).to.have.property('Scope')
@@ -32,7 +29,7 @@ describe('Compose', () => {
       expect(spec.definitions).to.have.property('Shift')
       expect(spec.definitions).to.have.property('ShiftRequirement')
 
-      expect(operations.length).to.equal(8)
+      expect(operations.length).to.equal(9)
     })
   })
 
