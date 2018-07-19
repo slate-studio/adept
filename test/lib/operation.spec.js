@@ -3,7 +3,19 @@
 const { expect } = require('chai')
 const { Operation, Schema, Component }  = require('../../lib')
 
+let schemas, Profile
+
 describe('Operation :: Abstract operation class', () => {
+
+  before(async() => {
+    schemas = await Schema.load('test/lib/schemas')
+
+    Profile = class extends Component {
+      static get schema() {
+        return schemas.Profile
+      }
+    }
+  })
 
   describe('Operation.id', () => {
     it('should return name based on the class name', () => {
@@ -134,16 +146,8 @@ describe('Operation :: Abstract operation class', () => {
     })
   })
 
-  describe('Operation.reference', () => {
+  describe('Operation.reference(component)', () => {
     it('should attache object reference and return $ref', async() => {
-      const schemas = await Schema.load('test/lib/schemas')
-
-      class Profile extends Component {
-        static get schema() {
-          return schemas.Profile
-        }
-      }
-
       class ProfileOperation extends Operation {
       }
 
@@ -157,14 +161,6 @@ describe('Operation :: Abstract operation class', () => {
     })
 
     it('should return operation references', async() => {
-      const schemas = await Schema.load('test/lib/schemas')
-
-      class Profile extends Component {
-        static get schema() {
-          return schemas.Profile
-        }
-      }
-
       class CreateProfile extends Operation {
         static get mutation() {
           return Profile
@@ -188,72 +184,107 @@ describe('Operation :: Abstract operation class', () => {
       expect(Operation.parametersSchema.source).to.be.empty
     })
 
-    it('should return schema build from query and mutation schemas', () => {
+    it('should return schema build from query and mutation schemas', async() => {
+      class CreateProfile extends Operation {
+        static get mutation() {
+          return Profile
+        }
+      }
+
+      expect(CreateProfile.parametersSchema).have.property('id')
     })
   })
 
-  // describe('Operation.parametersSchema', () => {
-  //   it('should use empty source for scheme if query is missing', () => {
-  //     expect(Trigger.parametersSchema.source).to.be.empty
-  //   })
-  // })
+  describe('async Operation.buildParameters(queryParameters, mutationParameters)', () => {
+    it('should return hash with query and migration parameters', async() => {
+      class UpdateProfileInput extends Component {
+        static get schema() {
+          return Profile.schema.clone(this.name)
+        }
+      }
 
-  // describe('Operation.buildParameters', () => {
-  //   it('should return undefined values if no parameters configuration', () => {
-  //     const { query, mutation } = Operation.buildParameters()
-  //     expect(query).to.be.undefined
-  //     expect(mutation).to.be.undefined
-  //   })
+      class UpdateProfile extends Operation {
+        static get query() {
+          return {
+            id: {
+              type:     'string',
+              required: true
+            }
+          }
+        }
 
-  //   // it('should return query and mutation objects with default values', () => {
-  //   //   const queryParameters    = { id: 'TEST_UNIT' }
-  //   //   const mutationParameters = { name: 'Unit #1' }
+        static get mutation() {
+          return UpdateProfileInput
+        }
+      }
 
-  //   //   const { mutation } = await UpdateUnit
-  //   //     .buildParameters(queryParameters, mutationParameters)
+      const queryParameters = { id: 'ID_01' }
+      const mutationParameters = { firstName: 'Alexander' }
+      const { query, mutation } = await UpdateProfile.buildParameters(queryParameters, mutationParameters)
 
-  //   //   expect(mutation).to.have.property('dayStartTime')
-  //   //   expect(mutation).to.have.property('nightStartTime')
-  //   // })
+      expect(query).have.property('id')
+      expect(mutation).have.property('firstName')
+    })
 
-  //   // it('should raise exception if required parameter is missing in query', () => {
-  //   //   try {
-  //   //     await ReadUnit.buildParameters({})
+    it('should return hash with default query and migration parameters', async() => {
+      const { query, mutation } = await Operation.buildParameters()
 
-  //   //   } catch (error) {
-  //   //     expect(error.originalError.errors.length).to.be.equal(1)
-  //   //     return
-  //   //   }
+      expect(query).to.be.empty
+      expect(mutation).to.be.undefined
+    })
 
-  //   //   throw new Error('Expected exception has not been raised')
-  //   // })
-  // })
+    it('should throw validation exception if parameters are not valid', async() => {
+      class ReadProfile extends Operation {
+        static get query() {
+          return {
+            id: {
+              type:     'string',
+              required: true
+            }
+          }
+        }
 
-  // describe('.status =', () => {
-  //   it('should raise exception if status is not defined in responses', () => {
-  //     class NoStatusResponses extends Operation {
-  //       static get responses() {
-  //         return {
-  //           'OK': {}
-  //         }
-  //       }
-  //     }
+        static get resource() {
+          return Profile
+        }
+      }
 
-  //     const handler = new NoStatusResponses()
-  //     handler.status = 'OK'
+      try {
+        await ReadProfile.buildParameters({})
 
-  //     expect(handler.status).to.equal('OK')
+      } catch (error) {
+        expect(error.originalError.errors.length).to.be.equal(1)
+        return
+      }
 
-  //     try {
-  //       handler.status = 'No Content'
+      throw new Error('Expected exception has not been raised')
+    })
+  })
 
-  //     } catch (error) {
-  //       expect(error.message).to.equal('Response \'No Content\' is not defined for noStatusResponses')
-  //       return
-  //     }
+  describe('.status', () => {
+    it('should return operation status', () => {
+      class SampleOperation extends Operation {
+      }
 
-  //     throw new Error('Expected exception has not been raised')
-  //   })
-  // })
+      const sampleOperation = new SampleOperation()
+      expect(sampleOperation.status).to.be.undefined
+
+      sampleOperation.status = 'OK'
+      expect(sampleOperation.status).to.equal('OK')
+    })
+  })
+
+  describe('.status =', () => {
+    it('should raise exception if status is not defined in responses', () => {
+      class SampleOperation extends Operation {
+      }
+
+      const sampleOperation  = new SampleOperation()
+      sampleOperation.status = 'Internal Server Error'
+
+      expect(() => sampleOperation.status = 'Created')
+        .to.throw('Response \'Created\' is not defined for sampleOperation')
+    })
+  })
 
 })
