@@ -24,16 +24,17 @@
     "lodash.pick": "^4.4.0",
     "lodash.tolower": "^4.1.2",
     "statuses": "^1.5.0",
-    "z-schema": "^3.20.0"
+    "z-schema": "^3.22.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "eslint": "^5.1.0",
     "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^5.1.1"
+    "mocha": "^5.2.0"
   },
   "scripts": {
     "mocha": "istanbul cover _mocha",
-    "test": "eslint lib/ test/ examples/ && nsp check && npm run mocha"
+    "test": "eslint lib/ test/ examples/ && npm run mocha"
   },
   "author": "Alexander Kravets <alex@slatestudio.com>",
   "license": "ISC"
