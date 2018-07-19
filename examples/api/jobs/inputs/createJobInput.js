@@ -1,7 +1,7 @@
 'use strict'
 
-const Job = require('../../models/job')
-const { Component } = require('../../../lib')
+const Job = require('../../../models/job')
+const { Component } = require('../../../../lib')
 
 class CreateJobInput extends Component {
   static get schema() {

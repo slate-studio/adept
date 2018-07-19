@@ -1,6 +1,6 @@
 {
   "name": "@slatestudio/adept",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "description": "Low dependency skeleton for specification based API service",
   "repository": {
     "type": "git",
@@ -33,8 +33,7 @@
     "mocha": "^5.2.0"
   },
   "scripts": {
-    "mocha": "istanbul cover _mocha",
-    "test": "eslint lib/ test/ examples/ && nyc --reporter html mocha --exit"
+    "test": "eslint lib/ test/ examples/ sample/ && nyc --reporter html mocha --exit"
   },
   "author": "Alexander Kravets <alex@slatestudio.com>",
   "license": "ISC"

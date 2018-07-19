@@ -2,7 +2,7 @@
 
 const Unit       = require('../../models/unit')
 const { Update } = require('../../../lib')
-const UpdateUnitInput = require('./updateUnitInput')
+const UpdateUnitInput = require('./inputs/updateUnitInput')
 
 class UpdateUnit extends Update {
   static get tags() {

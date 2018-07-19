@@ -2,7 +2,7 @@
 
 const Job        = require('../../models/unit')
 const { Create } = require('../../../lib')
-const CreateJobInput = require('./createJobInput')
+const CreateJobInput = require('./inputs/createJobInput')
 
 class CreateJob extends Create {
   static get tags() {

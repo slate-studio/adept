@@ -1,7 +1,7 @@
 'use strict'
 
-const Unit = require('../../models/unit')
-const { Component } = require('../../../lib')
+const Unit = require('../../../models/unit')
+const { Component } = require('../../../../lib')
 
 class UpdateUnitInput extends Component {
   static get schema() {
@@ -16,7 +16,8 @@ class UpdateUnitInput extends Component {
         'schedulingStartsAt',
         'dayStartTime',
         'nightStartTime',
-      ]
+      ],
+      isUpdate: true
     })
 
     for (const name in schema.source) {

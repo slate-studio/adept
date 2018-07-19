@@ -3,7 +3,7 @@
 const Unit         = require('../../models/unit')
 const { Create }   = require('../../../lib')
 const { security } = require('../../securities')
-const CreateUnitInput = require('./createUnitInput')
+const CreateUnitInput = require('./inputs/createUnitInput')
 
 class CreateUnit extends Create {
   static get tags() {
