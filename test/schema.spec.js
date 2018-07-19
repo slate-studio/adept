@@ -10,14 +10,8 @@ describe('Schema', () => {
 
   describe('Schema.load()', () => {
     it('should raise exception if schema validation fails', async() => {
-      try {
-        Schema.load('examples/schemas', { validatorOptions: { strictMode: true }})
-
-      } catch (error) {
-        return
-      }
-
-      throw new Error('Expected exception has not been raised')
+      const load = () => Schema.load('examples/schemas', { validatorOptions: { strictMode: true }})
+      expect(load).to.throw()
     })
   })
 

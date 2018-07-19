@@ -6,4 +6,3 @@
 **Low dependency skeleton for specification based API services**
 
 ## Getting Started
-

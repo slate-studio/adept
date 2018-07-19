@@ -8,4 +8,4 @@ install:
   - npm install
 script:
   - eslint lib/ test/ examples/
-  - npm run mocha
+  - nyc mocha --exit
