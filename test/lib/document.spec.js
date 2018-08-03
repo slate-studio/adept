@@ -1,42 +1,102 @@
 'use strict'
 
-const Unit = require('../examples/models/unit')
-const Document   = require('../lib/document')
 const { expect } = require('chai')
+const { Schema, Document } = require('../../lib')
 
 describe('Document', () => {
 
-  describe('Document.constructor()', () => {
-    it('should support no parameters', () => {
-      new Unit()
+  describe('Document.constructor(attributes = {})', () => {
+    it('should assign attributes to the instance', () => {
+      const doc1 = new Document({ data: 'test' })
+      expect(doc1.attributes.data).to.equal('test')
+
+      const doc2 = new Document()
+      expect(doc2.attributes).to.be.empty
     })
   })
 
-  describe('Document.getSchema()', () => {
-    it('should raise exception if not defined', () => {
-      try {
-        Document.getSchema('DefinitionName')
+  describe('Document.getSchema(name)', () => {
+    it('should throw exception if getSchema method is not defined', () => {
+      class Book extends Document {}
 
-      } catch (error) {
-        expect(error.message).to.equal('Document.getSchema() is not defined')
-        return
+      expect(() => Book.getSchema('Author')).to
+        .throw('Book.getSchema(name) is not defined, requested schema name: Author')
+    })
+  })
+
+  describe('Document.commonSchema', () => {
+    it('should return common schema for documents', () => {
+      const schemas = {
+        Common: new Schema('Common', {
+          createdAt: { type: 'string', format: 'date-time' }
+        })
       }
 
-      throw new Error('Expected exception has not been raised')
+      class Book extends Document {
+        static getSchema(name) {
+          return schemas[name]
+        }
+      }
+
+      expect(Book.commonSchema.id).to.be.equal('Common')
     })
   })
 
-  describe('.id', () => {
-    it('should return document id', () => {
-      const unit = new Unit({ id: 'TEST_UNIT_ID' })
-      expect(unit).to.have.property('id')
+  describe('Document.documentSchema', () => {
+    it('should return partial schema for document', () => {
+      const schemas = {
+        Common: new Schema('Common', {
+          createdAt: { type: 'string', format: 'date-time' }
+        }),
+        Book: new Schema('Book', {
+          author: { type: 'string' }
+        })
+      }
+
+      class Book extends Document {
+        static getSchema(name) {
+          return schemas[name]
+        }
+      }
+
+      expect(Book.documentSchema.id).to.be.equal('Book')
+    })
+  })
+
+  describe('Document.schema', () => {
+    it('should return schema', () => {
+      // TODO: Check case when source is JSON schema
+      const schemas = {
+        Common: new Schema('Common', {
+          createdAt: { type: 'string', format: 'date-time' }
+        }),
+        Book: new Schema('Book', {
+          author: { type: 'string' }
+        })
+      }
+
+      class Book extends Document {
+        static getSchema(name) {
+          return schemas[name]
+        }
+      }
+
+      expect(Book.schema.source).to.have.property('author')
+      expect(Book.schema.source).to.have.property('createdAt')
     })
   })
 
   describe('.toJSON()', () => {
     it('should return document attributes', () => {
-      const unit = new Unit({ name: 'Demo Unit #1' })
-      expect(unit.toJSON()).to.have.property('name')
+      const doc = new Document({ name: 'Demo' })
+      expect(doc.toJSON()).to.have.property('name')
+    })
+  })
+
+  describe('.id', () => {
+    it('should return document id', () => {
+      const doc = new Document({ id: 'DEMO' })
+      expect(doc).to.have.property('id')
     })
   })
 
