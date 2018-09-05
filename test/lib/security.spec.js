@@ -1,44 +1,24 @@
 'use strict'
 
-const Security   = require('../lib/security')
-const { expect } = require('chai')
+const { expect }   = require('chai')
+const { Security } = require('lib')
 
 describe('Security', () => {
 
+  describe('Security.in', () => {
+    it('should throw exception if in is not defined', () => {
+      expect(() => Security.in).to.throw('Security.in is not defined')
+    })
+  })
+
+  describe('Security.type', () => {
+    it('should throw exception if type is not defined', () => {
+      expect(() => Security.type).to.throw('Security.type is not defined')
+    })
+  })
+
   describe('Security.spec', () => {
-    it('should raise exception if type is not defined', () => {
-      class NoType extends Security {}
-
-      try {
-        NoType.spec
-
-      } catch (error) {
-        expect(error.message).to.equal('NoType.type is not defined')
-        return
-      }
-
-      throw new Error('Expected exception has not been raised')
-    })
-
-    it('should raise exception if in is not defined', () => {
-      class NoIn extends Security {
-        static get type() {
-          return 'apiKey'
-        }
-      }
-
-      try {
-        NoIn.spec
-
-      } catch (error) {
-        expect(error.message).to.equal('NoIn.in is not defined')
-        return
-      }
-
-      throw new Error('Expected exception has not been raised')
-    })
-
-    it('should have spec', () => {
+    it('should return security spec', () => {
       class CustomSecurity extends Security {
         static get type() {
           return 'apiKey'

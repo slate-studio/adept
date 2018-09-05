@@ -1,6 +1,6 @@
 'use strict'
 
-const { Component, Schema } = require('../../lib')
+const { Component, Schema } = require('lib')
 const { expect } = require('chai')
 
 describe('Component :: Abstract component class', () => {

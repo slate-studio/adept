@@ -1,7 +1,7 @@
 'use strict'
 
 const { expect } = require('chai')
-const { Operation, Schema, Component }  = require('../../lib')
+const { Operation, Schema, Component }  = require('lib')
 
 let schemas, Profile
 

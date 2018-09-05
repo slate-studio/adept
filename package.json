@@ -33,7 +33,7 @@
     "mocha": "^5.2.0"
   },
   "scripts": {
-    "test": "eslint lib/ test/ examples/ && nyc --reporter html mocha --exit"
+    "test": "eslint lib/ test/ examples/ && NODE_PATH=./ nyc --reporter html mocha --exit"
   },
   "author": "Alexander Kravets <alex@slatestudio.com>",
   "license": "ISC"

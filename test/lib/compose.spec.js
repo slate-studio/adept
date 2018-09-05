@@ -1,8 +1,8 @@
 'use strict'
 
-const api = require('../examples/api')
-const Composer   = require('../lib/composer')
-const { expect } = require('chai')
+const api = require('examples/api')
+const { Composer } = require('lib')
+const { expect }   = require('chai')
 
 describe('Compose', () => {
 

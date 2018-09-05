@@ -1,7 +1,7 @@
 'use strict'
 
 const { expect } = require('chai')
-const { Schema, Document } = require('../../lib')
+const { Schema, Document } = require('lib')
 
 describe('Document', () => {
 
@@ -65,7 +65,8 @@ describe('Document', () => {
 
   describe('Document.schema', () => {
     it('should return schema', () => {
-      // TODO: Check case when source is JSON schema
+      // TODO: Check case when source is JSON schema, merge in this case doesn't
+      //       work correctly.
       const schemas = {
         Common: new Schema('Common', {
           createdAt: { type: 'string', format: 'date-time' }

@@ -1,7 +1,7 @@
 'use strict'
 
 const ZSchema    = require('z-schema')
-const { Schema } = require('../../lib')
+const { Schema } = require('lib')
 const { expect } = require('chai')
 
 describe('Schema', () => {
