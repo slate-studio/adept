@@ -1,6 +1,0 @@
-type: string
-enum:
-  - pending
-  - processing
-  - complete
-  - error
