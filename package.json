@@ -1,7 +1,7 @@
 {
   "name": "@slatestudio/adept",
   "version": "1.0.0",
-  "description": "Low dependency skeleton for specification based API service",
+  "description": "Fat free library for schema based API services",
   "repository": {
     "type": "git",
     "url": "http://github.com/slate-studio/adept.git"
