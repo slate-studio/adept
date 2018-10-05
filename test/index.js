@@ -1,8 +1,8 @@
 'use strict'
 
-require('./lib/schema.spec')
-require('./lib/component.spec')
-require('./lib/operation.spec')
-require('./lib/document.spec')
-require('./lib/security.spec')
-// require('./lib/compose.spec')
+require('./lib/Schema.spec')
+require('./lib/Component.spec')
+require('./lib/Operation.spec')
+require('./lib/Document.spec')
+require('./lib/Security.spec')
+// require('./lib/Compose.spec')

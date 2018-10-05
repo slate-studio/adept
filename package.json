@@ -1,6 +1,6 @@
 {
   "name": "@slatestudio/adept",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Low dependency skeleton for specification based API service",
   "repository": {
     "type": "git",
