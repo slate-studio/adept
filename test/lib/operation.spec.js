@@ -232,33 +232,6 @@ describe('Operation :: Abstract operation class', () => {
       expect(query).to.be.empty
       expect(mutation).to.be.undefined
     })
-
-    it('should throw validation exception if parameters are not valid', async() => {
-      class ReadProfile extends Operation {
-        static get query() {
-          return {
-            id: {
-              type:     'string',
-              required: true
-            }
-          }
-        }
-
-        static get resource() {
-          return Profile
-        }
-      }
-
-      try {
-        await ReadProfile.buildParameters({})
-
-      } catch (error) {
-        expect(error.originalError.errors.length).to.be.equal(1)
-        return
-      }
-
-      throw new Error('Expected exception has not been raised')
-    })
   })
 
   describe('.status', () => {
