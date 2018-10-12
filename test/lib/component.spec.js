@@ -11,24 +11,9 @@ describe('Component :: Abstract component class', () => {
     })
   })
 
-  describe('Component.schema', () => {
-    it('should throw exception if schema is not defined', () => {
-      expect(() => Component.schema).to.throw('Component.schema is not defined')
-    })
-  })
-
   describe('Component.schemas', () => {
-    it('should return child schemas', async() => {
-      const schemas = await Schema.load('test/lib/schemas')
-
-      class Profile extends Component {
-        static get schema() {
-          return schemas.Profile
-        }
-      }
-
-      expect(Profile.schemas).to.have.property('Profile')
-      expect(Profile.schemas).to.have.property('Profile')
+    it('should return preloaded schemas from app/schemas/', async() => {
+      expect(Component.schemas).to.be.empty
     })
   })
 
@@ -37,8 +22,8 @@ describe('Component :: Abstract component class', () => {
       const schemas = await Schema.load('test/lib/schemas')
 
       class Profile extends Component {
-        static get schema() {
-          return schemas.Profile
+        static get schemas() {
+          return schemas
         }
       }
 

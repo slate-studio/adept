@@ -11,8 +11,8 @@ describe('Operation :: Abstract operation class', () => {
     schemas = await Schema.load('test/lib/schemas')
 
     Profile = class extends Component {
-      static get schema() {
-        return schemas.Profile
+      static get schemas() {
+        return schemas
       }
     }
   })
