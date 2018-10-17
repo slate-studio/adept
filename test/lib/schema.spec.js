@@ -230,6 +230,10 @@ describe('Schema', () => {
         },
         parameters: {
           $ref: 'ProfileParameters'
+        },
+        isActive: {
+          type:    'boolean',
+          default: false
         }
       })
 
@@ -243,6 +247,7 @@ describe('Schema', () => {
 
       expect(object.firstName).to.equal('Alexander')
       expect(object.lastName).to.equal('Kravets')
+      expect(object.isActive).to.equal(false)
       expect(object.parameters.shoeSize).to.equal(42)
       expect(object.parameters.shirtSize).to.equal('M')
 
