@@ -1,6 +1,6 @@
 {
   "name": "@slatestudio/adept",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Fat free library for schema based API services",
   "repository": {
     "type": "git",

@@ -177,11 +177,11 @@ describe('Operation :: Abstract operation class', () => {
     })
   })
 
-  describe('Operation.parametersSchema', () => {
+  describe('Operation.inputSchema', () => {
     it('should return schema with id and empty source', () => {
-      expect(Operation.parametersSchema).to.have.property('id')
-      expect(Operation.parametersSchema).to.have.property('source')
-      expect(Operation.parametersSchema.source).to.be.empty
+      expect(Operation.inputSchema).to.have.property('id')
+      expect(Operation.inputSchema).to.have.property('source')
+      expect(Operation.inputSchema.source).to.be.empty
     })
 
     it('should return schema build from query and mutation schemas', async() => {
@@ -191,46 +191,7 @@ describe('Operation :: Abstract operation class', () => {
         }
       }
 
-      expect(CreateProfile.parametersSchema).have.property('id')
-    })
-  })
-
-  describe('async Operation.buildParameters(queryParameters, mutationParameters)', () => {
-    it('should return hash with query and migration parameters', async() => {
-      class UpdateProfileInput extends Component {
-        static get schema() {
-          return Profile.schema.clone(this.name)
-        }
-      }
-
-      class UpdateProfile extends Operation {
-        static get query() {
-          return {
-            id: {
-              type:     'string',
-              required: true
-            }
-          }
-        }
-
-        static get mutation() {
-          return UpdateProfileInput
-        }
-      }
-
-      const queryParameters = { id: 'ID_01' }
-      const mutationParameters = { firstName: 'Alexander' }
-      const { query, mutation } = await UpdateProfile.buildParameters(queryParameters, mutationParameters)
-
-      expect(query).have.property('id')
-      expect(mutation).have.property('firstName')
-    })
-
-    it('should return hash with default query and migration parameters', async() => {
-      const { query, mutation } = await Operation.buildParameters()
-
-      expect(query).to.be.empty
-      expect(mutation).to.be.undefined
+      expect(CreateProfile.inputSchema).have.property('id')
     })
   })
 

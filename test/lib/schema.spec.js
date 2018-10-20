@@ -5,6 +5,39 @@ const { Schema } = require('lib')
 const { expect } = require('chai')
 
 describe('Schema', () => {
+
+  const profileSexSchema = new Schema('ProfileSex', {
+    type: 'string',
+    enum: [ 'Male', 'Female' ]
+  })
+
+  const profileParametersSchema = new Schema('ProfileParameters', {
+    shoeSize:  { type: 'number', default: 42 },
+    shirtSize: { type: 'string', default: 'M' },
+    isValid:   { type: 'boolean', default: true }
+  })
+
+  const profileSchema = new Schema('Profile', {
+    firstName: { type: 'string', default: 'Alexander' },
+    lastName:  { type: 'string', default: 'Kravets' },
+    age:       { type: 'number' },
+    sex:       {
+      $ref: 'ProfileSex'
+    },
+    parameters: {
+      $ref: 'ProfileParameters'
+    },
+    isActive: {
+      type:    'boolean',
+      default: false
+    }
+  })
+
+  profileSchema.schemas = {
+    ProfileSex:        profileSexSchema,
+    ProfileParameters: profileParametersSchema
+  }
+
   describe('Schema.constructor(id, source)', () => {
     it('should initialize schema with id and source', () => {
       const schema = new Schema('Test', {})
@@ -209,39 +242,8 @@ describe('Schema', () => {
     })
   })
 
-  describe('.updateDefaults()', () => {
+  describe('.updateDefaults(object)', () => {
     it('should update object with schemas defaults', async() => {
-      const profileSexSchema = new Schema('ProfileSex', {
-        type: 'string',
-        enum: [ 'Male', 'Female' ]
-      })
-
-      const profileParametersSchema = new Schema('ProfileParameters', {
-        shoeSize:  { type: 'number', default: 42 },
-        shirtSize: { type: 'string', default: 'M' }
-      })
-
-      const profileSchema = new Schema('Profile', {
-        firstName: { type: 'string', default: 'Alexander' },
-        lastName:  { type: 'string', default: 'Kravets' },
-        age:       { type: 'number' },
-        sex:       {
-          $ref: 'ProfileSex'
-        },
-        parameters: {
-          $ref: 'ProfileParameters'
-        },
-        isActive: {
-          type:    'boolean',
-          default: false
-        }
-      })
-
-      profileSchema.schemas = {
-        ProfileSex:        profileSexSchema,
-        ProfileParameters: profileParametersSchema
-      }
-
       const object = { parameters: {} }
       profileSchema.updateDefaults(object)
 
@@ -252,6 +254,71 @@ describe('Schema', () => {
       expect(object.parameters.shirtSize).to.equal('M')
 
       profileSexSchema.updateDefaults('')
+    })
+  })
+
+  describe('.updateTypes(object)', () => {
+    it('should normalize objects value types according to schema', async() => {
+      let object
+
+      object = { shoeSize: '40' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ shoeSize: 40 })
+
+      object = { shoeSize: 'NaN' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ shoeSize: 'NaN' })
+
+      object = { isValid: '0' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: false })
+
+      object = { isValid: 'false' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: false })
+
+      object = { isValid: '1' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: true })
+
+      object = { isValid: 'true' }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: true })
+
+      object = { isValid: true }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: true })
+
+      object = { isValid: 1 }
+      profileParametersSchema.updateTypes(object)
+      expect(object).to.include({ isValid: true })
+
+      profileSexSchema.updateTypes({ data: 'OK' })
+    })
+  })
+
+  describe('.cleanup(object)', () => {
+    it('should remove fields not defined in schema', async() => {
+      let object
+
+      object = {
+        lastName:   'Alexander',
+        sex:        'Male',
+        hair:       'Dark',
+        parameters: {
+          shoeSize:  42,
+          isSmoking: false
+        }
+      }
+
+      profileSchema.cleanup(object)
+      expect(object).to.deep.equal({
+        lastName:   'Alexander',
+        sex:        'Male',
+        parameters: {
+          shoeSize: 42
+        }
+      })
     })
   })
 
