@@ -19,49 +19,26 @@ describe('Operation :: Abstract operation class', () => {
 
   describe('Operation.id', () => {
     it('should return name based on the class name', () => {
-      expect(Operation.id).to.equal('operation')
+      expect(Operation.id).to.equal('Operation')
+    })
+  })
+
+  describe('Operation.type', () => {
+    it('returns type', () => {
+      expect(Operation.type).to.equal('READ')
+    })
+  })
+
+  describe('Operation.types', () => {
+    it('returns object with supported types', () => {
+      const keys = Object.keys(Operation.types)
+      expect(keys).to.deep.equal([ 'CREATE', 'READ', 'UPDATE', 'DELETE' ])
     })
   })
 
   describe('Operation.tags', () => {
     it('should return empty list', () => {
       expect(Operation.tags).to.be.empty
-    })
-  })
-
-  describe('Operation.path', () => {
-    it('should return path based on operationId', () => {
-      expect(Operation.path).to.equal('/operation')
-    })
-  })
-
-  describe('Operation.method', () => {
-    it('should return GET method', () => {
-      expect(Operation.method).to.equal('get')
-    })
-
-    it('should return PATCH method when mutation is defined', () => {
-      class Mutation extends Operation {
-        static get mutation() {
-          return {}
-        }
-      }
-      expect(Mutation.method).to.equal('patch')
-    })
-
-    it('should return POST method when create mutation is defined', () => {
-      class CreateMutation extends Operation {
-        static get mutation() {
-          return {}
-        }
-
-        static get responses() {
-          return {
-            Created: {}
-          }
-        }
-      }
-      expect(CreateMutation.method).to.equal('post')
     })
   })
 
@@ -84,8 +61,30 @@ describe('Operation :: Abstract operation class', () => {
   })
 
   describe('Operation.resource', () => {
-    it('should return null', () => {
+    it('returns `null` by default', () => {
       expect(Operation.resource).to.be.null
+    })
+  })
+
+  describe('Operation.output', () => {
+    it('returns `null` by default', () => {
+      expect(Operation.output).to.be.null
+    })
+  })
+
+  describe('Operation.resultSchema', () => {
+    it('throws exception when output is not defined', () => {
+      expect(() => Operation.resultSchema).to.throw('Operation.output is not defined')
+    })
+
+    it('should return output schema by default', () => {
+      class IndexProfiles extends Operation {
+        static get resource() {
+          return Profile
+        }
+      }
+
+      expect(IndexProfiles.resultSchema).to.have.property('id', 'Profile')
     })
   })
 
@@ -127,25 +126,6 @@ describe('Operation :: Abstract operation class', () => {
     })
   })
 
-  describe('Operation.responses', () => {
-    it('should return OK response with no schema', () => {
-      expect(Operation.responses).to.have.property('OK')
-      expect(Operation.responses.OK).to.be.empty
-    })
-
-    it('should return OK response with output schema', () => {
-      class ReadApple extends Operation {
-        static get output() {
-          return 'Apple'
-        }
-      }
-
-      expect(ReadApple.responses).to.have.property('OK')
-      expect(ReadApple.responses.OK).to.have.property('schema')
-      expect(ReadApple.responses.OK.schema).to.have.property('$ref')
-    })
-  })
-
   describe('Operation.reference(component)', () => {
     it('should attache object reference and return $ref', async() => {
       class ProfileOperation extends Operation {
@@ -171,9 +151,9 @@ describe('Operation :: Abstract operation class', () => {
     })
   })
 
-  describe('Operation.operationError', () => {
-    it('should return reference to OperationError', () => {
-      expect(Operation.operationError).to.have.property('$ref')
+  describe('Operation.defaultError', () => {
+    it('should return OperationError', () => {
+      expect(Operation.defaultError).to.equal('OperationError')
     })
   })
 
@@ -195,30 +175,48 @@ describe('Operation :: Abstract operation class', () => {
     })
   })
 
-  describe('.status', () => {
-    it('should return operation status', () => {
-      class SampleOperation extends Operation {
-      }
-
-      const sampleOperation = new SampleOperation()
-      expect(sampleOperation.status).to.be.undefined
-
-      sampleOperation.status = 'OK'
-      expect(sampleOperation.status).to.equal('OK')
+  describe('Operation.isOperation(object)', () => {
+    it('returns `false` if object does not have `id` or `type` fields', async() => {
+      expect(Operation.isOperation({})).to.be.false
+      expect(Operation.isOperation({ id: 'TEST' })).to.be.false
+      expect(Operation.isOperation({ id: 'TEST', type: 'READ' })).to.be.true
     })
   })
 
-  describe('.status =', () => {
-    it('should raise exception if status is not defined in responses', () => {
-      class SampleOperation extends Operation {
+  describe('Operation.buildValidators()', () => {
+    it('builds validators and validates all related schemas', async() => {
+      class CreateProfile extends Operation {
+        static get resource() {
+          return Profile
+        }
+
+        static get mutation() {
+          return Profile
+        }
       }
 
-      const sampleOperation  = new SampleOperation()
-      sampleOperation.status = 'Internal Server Error'
+      class DeleteProfile extends Operation {
+        static get type() {
+          return Operation.types.DELETE
+        }
 
-      expect(() => sampleOperation.status = 'Created')
-        .to.throw('Response \'Created\' is not defined for sampleOperation')
+        static get query() {
+          return {
+            id: { type: 'string', required: true }
+          }
+        }
+
+        static get resource() {
+          return Profile
+        }
+
+        static get output() {
+          return null
+        }
+      }
+
+      CreateProfile.buildValidators()
+      DeleteProfile.buildValidators()
     })
   })
-
 })

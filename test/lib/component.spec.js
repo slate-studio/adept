@@ -46,4 +46,12 @@ describe('Component :: Abstract component class', () => {
       expect(Profile.resolveReferences()).to.be.undefined
     })
   })
+
+  describe('Component.isComponent(object)', () => {
+    it('returns `false` if object does not have `id`, `schema` or `reference` fields', async() => {
+      expect(Component.isComponent({})).to.be.false
+      expect(Component.isComponent({ id: 'TEST' })).to.be.false
+      expect(Component.isComponent({ id: 'TEST', schema: {} })).to.be.false
+    })
+  })
 })
